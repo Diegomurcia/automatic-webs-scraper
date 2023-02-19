@@ -11,7 +11,7 @@
 	Además, el código fuente puede descargarse desde github mediante:
 	https://github.com/Diegomurcia/automatic-web-scraper.git 
 
-	para probar el programa hay que ejecutar C:\ejercicio-candidato\ejercicio-candidato.bat 
+	para probar el programa hay que ejecutar C:\automatic-web-scraper\automatic-web-scraper.bat 
 	o ejecutar los siguientes comandos por linea de comandos:
 
 	cd C:\automatic-web-scraper
