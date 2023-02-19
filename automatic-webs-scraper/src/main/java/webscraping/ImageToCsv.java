@@ -12,10 +12,10 @@ import java.util.List;
  */
 public class ImageToCsv implements ItToCsv{
 
-    private String dst;
+    private String dirLocal;
 
-    public ImageToCsv(String dst){
-        this.dst= dst;
+    public ImageToCsv(String dirLocal){
+        this.dirLocal= dirLocal;
     }
 
     private void imageListToCsv(List<Image> imgList) {
@@ -24,8 +24,9 @@ public class ImageToCsv implements ItToCsv{
         int sizeControl = 0;
 
         try (FileWriter file = new FileWriter(
-        		this.dst+
-        		AutoWebConstat.SLASH+"loot-excel.csv")){
+        		this.dirLocal+
+        		AutoWebConstat.SLASH+
+        		AutoWebConstat.LOOT_EXCEL_CSV)){
 
             for(Image img : imgList) {
             	sizeControl++;
@@ -47,7 +48,7 @@ public class ImageToCsv implements ItToCsv{
             System.out.println("Fin de la ejecución");
             System.out.println("");
             System.out.println("Se ha generado el csv: "
-                    +"img-ejercicio-candidato-excel");
+                    +AutoWebConstat.LOOT_EXCEL_CSV);
 
         } catch (IOException e) {
             System.out.println("FILE_ERROR "+e.getMessage());

@@ -3,6 +3,8 @@ package webscraping;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -22,10 +24,7 @@ public class WebScrapingImage implements IWebScraping{
 	private ExecutorService executorService;
 	private List<Image> imgListSaved;
 	private WebContent webContent = new WebContent();
-	private static final String SRC = "src=";
-	private static final String JPG = ".jpg";
-	private static final String JPEG = ".jpeg";
-	private static final String PNG = ".png";
+	
 	WebScrapingImage(String webPage,
 					   String dirLocal,
 					   IDataBase dataBase,
@@ -72,29 +71,16 @@ public class WebScrapingImage implements IWebScraping{
 	}
 
 	private List<String> getImgList(String content) {
-		List<String> imgList = new ArrayList<String>();
-		String[] lineas = content.split(">")   ;
+		List<String> imgList = new ArrayList<String>();		
+		Pattern pattern = Pattern.compile(AutoWebConstat.IMG_SRC_REGX);
+		Matcher matcher = pattern.matcher(content);
 		
-		for(String line : lineas) {
-			if(isAimage(JPG, line)){
-				imgList.add(addLine(line, line.indexOf(SRC)+5, line.lastIndexOf(JPG)+4));
-	        }
-			else if(isAimage(JPEG, line)){
-				imgList.add(addLine(line, line.indexOf(SRC)+5, line.lastIndexOf(JPEG)+5));
-	        }
-			else if(isAimage(PNG, line)){
-				imgList.add(addLine(line, line.indexOf(SRC)+5, line.lastIndexOf(PNG)+4));
+		while(matcher.find()) {
+			if ( !matcher.group(1).isEmpty()) {
+				imgList.add(matcher.group(4));
 			}
 		}
 		return imgList;
-	}
-
-	private boolean isAimage(String ext, String line) {
-		return line.contains(SRC) && line.contains(ext);
-	}
-
-	private String addLine(String line, int begInd, int lastInd) {
-		return line.substring(begInd,lastInd);
 	}
 
 	public List<Image> getLoot() {
